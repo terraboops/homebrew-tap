@@ -1,4 +1,6 @@
 class Incubator < Formula
+  include Language::Python::Virtualenv
+
   desc "A team of Claude agents that takes an idea from research to release"
   homepage "https://github.com/terraboops/incubator"
   url "https://github.com/terraboops/incubator/archive/refs/tags/v0.2.1.tar.gz"
