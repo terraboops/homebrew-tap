@@ -11,8 +11,9 @@ class Incubator < Formula
 
   def install
     venv = virtualenv_create(libexec, "python3.12")
-    system libexec/"bin/pip", "install", buildpath
-    venv.link_scripts(libexec/"bin", "incubator")
+    # Use pip directly (without --no-deps) so all dependencies resolve
+    system libexec/"bin/python", "-m", "pip", "install", "--no-cache-dir", buildpath
+    (bin/"incubator").write_env_script(libexec/"bin/incubator", PATH: "#{libexec}/bin:$PATH")
   end
 
   def caveats
