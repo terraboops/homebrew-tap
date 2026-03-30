@@ -8,17 +8,10 @@ class Trellis < Formula
   license "Apache-2.0"
 
   depends_on "python@3.12"
-  depends_on "rust" => :build  # cryptography requires Rust to build from source
-
-  skip_clean "libexec"
 
   def install
     venv = virtualenv_create(libexec, "python3.12")
-    # Build cryptography from source so Mach-O headers have room for
-    # Homebrew's dylib ID relocation (pre-built wheels have headers
-    # that are too small, causing "Failed changing dylib ID" errors).
-    system libexec/"bin/python", "-m", "pip", "install",
-           "--no-cache-dir", "--no-binary", "cryptography", buildpath
+    system libexec/"bin/python", "-m", "pip", "install", "--no-cache-dir", buildpath
     (bin/"trellis").write_env_script(libexec/"bin/trellis", PATH: "#{libexec}/bin:$PATH")
   end
 
