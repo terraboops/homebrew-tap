@@ -9,14 +9,20 @@ class Trellis < Formula
 
   depends_on "python@3.12"
 
-  # Prevent Homebrew from rewriting dylib IDs inside the virtualenv.
-  # Rust-built .abi3.so files (cryptography) have Mach-O headers too
-  # small for relocation, causing "Failed changing dylib ID" errors.
   skip_clean "libexec"
 
   def install
     venv = virtualenv_create(libexec, "python3.12")
     system libexec/"bin/python", "-m", "pip", "install", "--no-cache-dir", buildpath
+
+    # Pad Mach-O headers on Rust-built .abi3.so files so Homebrew's
+    # post-install dylib ID rewriting has enough space to fit the
+    # full Cellar path. Without this, cryptography's .so gets:
+    #   "Updated load commands do not fit in the header"
+    Dir.glob(libexec/"lib/**/*.abi3.so").each do |so|
+      system "install_name_tool", "-headerpad_max_install_names", so
+    end
+
     (bin/"trellis").write_env_script(libexec/"bin/trellis", PATH: "#{libexec}/bin:$PATH")
   end
 
