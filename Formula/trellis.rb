@@ -9,9 +9,13 @@ class Trellis < Formula
 
   depends_on "python@3.12"
 
+  # Prevent Homebrew from rewriting dylib IDs inside the virtualenv.
+  # Rust-built .abi3.so files (cryptography) have Mach-O headers too
+  # small for relocation, causing "Failed changing dylib ID" errors.
+  skip_clean "libexec"
+
   def install
     venv = virtualenv_create(libexec, "python3.12")
-    # Use pip directly (without --no-deps) so all dependencies resolve
     system libexec/"bin/python", "-m", "pip", "install", "--no-cache-dir", buildpath
     (bin/"trellis").write_env_script(libexec/"bin/trellis", PATH: "#{libexec}/bin:$PATH")
   end
