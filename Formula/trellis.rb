@@ -1,10 +1,10 @@
 class Trellis < Formula
   include Language::Python::Virtualenv
 
-  desc "Agentic pipeline platform — design agent teams that take ideas from concept to launch"
+  desc "Agentic pipeline platform - design agent teams that take ideas from concept to launch"
   homepage "https://github.com/terraboops/trellis"
-  url "https://github.com/terraboops/trellis/archive/refs/tags/v1.1.2.tar.gz"
-  sha256 "6524753cbcf6c2dc3433c77c41465f9e3449c0160142331f0ec83bf96e3e0b77"
+  url "https://github.com/terraboops/trellis/archive/refs/tags/v1.1.3.tar.gz"
+  sha256 "2964bf369c45880790cb5ffad354e27c2c941db89981ce29e53df7669357fdf4"
   license "Apache-2.0"
 
   depends_on "python@3.12"
@@ -12,7 +12,7 @@ class Trellis < Formula
   def install
     venv = virtualenv_create(libexec, "python3.12")
     system libexec/"bin/python", "-m", "pip", "install", "--no-cache-dir", buildpath
-    (bin/"trellis").write_env_script(libexec/"bin/trellis", PATH: "#{libexec}/bin:\$PATH")
+    (bin/"trellis").write_env_script(libexec/"bin/trellis", PATH: "#{libexec}/bin:$PATH")
   end
 
   def caveats
@@ -21,10 +21,6 @@ class Trellis < Formula
         trellis init myproject
         cd myproject
         trellis serve
-
-      Configure your .env file with Telegram credentials for
-      human-in-the-loop approval gates. See:
-        https://github.com/terraboops/trellis#configuration
     EOS
   end
 
