@@ -3,8 +3,8 @@ class Trellis < Formula
 
   desc "Agentic pipeline platform - design agent teams that take ideas from concept to launch"
   homepage "https://github.com/terraboops/trellis"
-  url "https://github.com/terraboops/trellis/archive/refs/tags/v1.1.6.tar.gz"
-  sha256 "93974029e6e3938092fee602220ca917690c6d2f62ea0effde794849d2277b18"
+  url "https://github.com/terraboops/trellis/archive/refs/tags/v1.1.7.tar.gz"
+  sha256 "a6d60bcbb997e7e9285ddaf942bee30bddf6e13e7e10f955be98ca5dade6b7c8"
   license "Apache-2.0"
 
   depends_on "python@3.12"
