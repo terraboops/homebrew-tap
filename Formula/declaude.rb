@@ -6,7 +6,7 @@ class Declaude < Formula
   version "0.1.0"
   license "MIT"
 
-  depends_on arch: :arm64        # MLX requires Apple Silicon
+  depends_on arch: :arm64 # MLX requires Apple Silicon
   depends_on :macos
 
   def install
@@ -14,7 +14,6 @@ class Declaude < Formula
   end
 
   test do
-    assert_predicate bin/"declaude", :exist?
-    # model weights are fetched on first run via `declaude --fetch-models`
+    assert_path_exists bin/"declaude"
   end
 end
